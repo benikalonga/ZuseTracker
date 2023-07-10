@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {FONT, SIZES, COLORS} from '../../../constants/theme';
 
 export const styles = StyleSheet.create({
+  mainStyle: {backgroundColor: COLORS.white, height: '100%'},
   container: {
     width: '100%',
     paddingLeft: 10,
@@ -80,4 +81,43 @@ export const styles = StyleSheet.create({
     height: '50%',
     tintColor: COLORS.white,
   },
+  btnOffMap: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'center',
+    borderRadius: 36,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    gap: 6,
+    backgroundColor: COLORS.primary,
+  },
+  btnMap: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'center',
+    borderRadius: 36,
+    borderWidth: 1,
+    borderColor: COLORS.tertiary,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    gap: 6,
+    position: 'absolute',
+    bottom: 16,
+    backgroundColor: COLORS.white,
+  },
+  btnItem: {
+    flexDirection: 'row',
+    paddingTop: 14,
+    paddingBottom: 14,
+    marginTop: 8,
+    borderRadius: SIZES.small,
+    backgroundColor: COLORS.white,
+  },
+  itemCtnr: {flex: 1, marginLeft: 10, gap: 6},
+  itemCtnr2: {flexDirection: 'row', alignItems: 'center'},
+  itemTxtCity: {
+    color: COLORS.secondary,
+    marginLeft: 6,
+  },
+  itemTxtDistance: {flexDirection: 'row', gap: 6},
 });

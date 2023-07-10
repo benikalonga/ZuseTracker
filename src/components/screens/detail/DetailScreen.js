@@ -23,7 +23,7 @@ import {
   faUserEdit as editIcon,
   faSave as saveIcon,
 } from '@fortawesome/free-solid-svg-icons';
-import {COLORS, FONT, SHADOWS} from '../../../constants/theme';
+import {COLORS, FONT} from '../../../constants/theme';
 import LoadingView from '../../common/loading/LoadingView';
 import {ErrorView} from '../../common/error/ErrorView';
 import {useDispatch, useSelector} from 'react-redux';
@@ -69,16 +69,10 @@ const DetailScreen = ({navigation, route}) => {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, height: '100%'}}>
+    <SafeAreaView style={styles.mainStyle}>
       <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.white} />
       <View style={styles.container}>
-        <View
-          style={{
-            alignItems: 'center',
-            paddingTop: 20,
-            paddingBottom: 20,
-            gap: 20,
-          }}>
+        <View style={styles.header}>
           <FontAwesomeIcon icon={userIcon} size={120} color={COLORS.gray2} />
 
           <Text style={styles.welcomeMessage}>
@@ -89,8 +83,8 @@ const DetailScreen = ({navigation, route}) => {
         {isLoading && <LoadingView />}
         {errorText && <ErrorView onRefresh={reFetch} />}
         {customer && (
-          <View style={{gap: 20, marginRight: 10, marginLeft: 10}}>
-            <View style={{flexDirection: 'row', gap: 10}}>
+          <View style={styles.content}>
+            <View style={styles.contentChild}>
               <FontAwesomeIcon
                 icon={pinIcon}
                 size={28}
@@ -101,7 +95,7 @@ const DetailScreen = ({navigation, route}) => {
                 <Text style={{fontFamily: FONT.regular}}>{address}</Text>
               </View>
             </View>
-            <View style={{flexDirection: 'row', gap: 10}}>
+            <View style={styles.contentChild}>
               <FontAwesomeIcon
                 icon={mailIcon}
                 size={28}
@@ -109,7 +103,7 @@ const DetailScreen = ({navigation, route}) => {
               />
               <Text style={styles.userName}>{customer.email}</Text>
             </View>
-            <View style={{flexDirection: 'row', gap: 10}}>
+            <View style={styles.contentChild}>
               <FontAwesomeIcon
                 icon={phoneIcon}
                 size={28}
@@ -120,69 +114,35 @@ const DetailScreen = ({navigation, route}) => {
 
             <View
               style={{
-                flexDirection: 'row',
-                gap: 10,
+                ...styles.contentChild,
                 justifyContent: 'center',
                 marginTop: 20,
               }}>
               <TouchableOpacity
                 onPress={() => handlePressMap(customer)}
-                style={{
-                  backgroundColor: COLORS.secondary,
-                  borderRadius: 4,
-                  padding: 10,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  flexDirection: 'row',
-                  gap: 10,
-                }}>
+                style={styles.btnOnMap}>
                 <FontAwesomeIcon
                   icon={mapIcon}
                   size={28}
                   color={COLORS.white}
                 />
-                <Text style={{color: COLORS.white, fontFamily: FONT.medium}}>
-                  VIEW ON THE MAP
-                </Text>
+                <Text style={styles.txtOnMap}>VIEW ON THE MAP</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handlePressEdit(routeCustomer)}
-                style={{
-                  width: 100,
-                  backgroundColor: COLORS.gray,
-                  borderRadius: 4,
-                  padding: 10,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  flexDirection: 'row',
-                  gap: 10,
-                }}>
+                style={styles.btnEdit}>
                 <FontAwesomeIcon
                   icon={editIcon}
                   size={28}
                   color={COLORS.white}
                 />
-                <Text style={{color: COLORS.white, fontFamily: FONT.medium}}>
-                  Edit
-                </Text>
+                <Text style={styles.txtOnMap}>Edit</Text>
               </TouchableOpacity>
             </View>
           </View>
         )}
       </View>
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          zIndex: 999,
-          margin: 10,
-          borderRadius: 54,
-          padding: 8,
-          backgroundColor: COLORS.white,
-          ...SHADOWS.small,
-        }}
-        onPress={handlePressBack}>
+      <TouchableOpacity style={styles.btnBack} onPress={handlePressBack}>
         <FontAwesomeIcon icon={backICon} size={22} color={COLORS.secondary} />
       </TouchableOpacity>
       <EditViewModal
@@ -226,28 +186,9 @@ const EditViewModal = ({
       onRequestClose={() => {
         setIsEditVisible(false);
       }}>
-      <View
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            width: width * 0.9,
-            padding: 10,
-            gap: 10,
-          }}>
-          <Text
-            style={{
-              fontFamily: FONT.regular,
-              fontSize: 16,
-              alignSelf: 'center',
-            }}>
-            EDITING OF CUSTOMER
-          </Text>
+      <View style={styles.modalCtnr}>
+        <View style={styles.modalContent(width)}>
+          <Text style={styles.txtTitle}>EDITING OF CUSTOMER</Text>
           <Text
             style={{
               ...styles.userName,
@@ -257,16 +198,7 @@ const EditViewModal = ({
             {customer.name}
           </Text>
           {/* Age */}
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 10,
-              alignItems: 'center',
-              borderRadius: 4,
-              borderWidth: 1,
-              borderColor: COLORS.gray2,
-              paddingLeft: 14,
-            }}>
+          <View style={styles.rowCtnr}>
             <FontAwesomeIcon icon={userIcon} size={16} color={COLORS.gray} />
             <Text style={{color: COLORS.gray}}>Age</Text>
             <TextInput
@@ -280,16 +212,7 @@ const EditViewModal = ({
             />
           </View>
           {/* Email */}
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 10,
-              alignItems: 'center',
-              borderRadius: 4,
-              borderWidth: 1,
-              borderColor: COLORS.gray2,
-              paddingLeft: 14,
-            }}>
+          <View style={styles.rowCtnr}>
             <FontAwesomeIcon icon={mailIcon} size={16} color={COLORS.gray} />
             <Text style={{color: COLORS.gray}}>Email</Text>
             <TextInput
@@ -303,16 +226,7 @@ const EditViewModal = ({
             />
           </View>
           {/* Phone */}
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 10,
-              alignItems: 'center',
-              borderRadius: 4,
-              borderWidth: 1,
-              borderColor: COLORS.gray2,
-              paddingLeft: 14,
-            }}>
+          <View style={styles.rowCtnr}>
             <FontAwesomeIcon icon={phoneIcon} size={16} color={COLORS.gray} />
             <Text style={{color: COLORS.gray}}>Phone</Text>
             <TextInput
@@ -326,42 +240,16 @@ const EditViewModal = ({
             />
           </View>
           {/* Modal Buttons  */}
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 10,
-              justifyContent: 'center',
-              marginTop: 20,
-            }}>
+          <View style={styles.btnCtnr}>
             <TouchableOpacity
               onPress={() => handleSave(customer)}
-              style={{
-                backgroundColor: COLORS.tertiary,
-                borderRadius: 4,
-                padding: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                alignSelf: 'center',
-                flexDirection: 'row',
-                gap: 10,
-              }}>
+              style={styles.btnSave}>
               <FontAwesomeIcon icon={saveIcon} size={28} color={COLORS.white} />
-              <Text style={{color: COLORS.white, fontFamily: FONT.medium}}>
-                SAVE
-              </Text>
+              <Text style={styles.txtSave}>SAVE</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setIsEditVisible(false)}
-              style={{
-                backgroundColor: COLORS.gray2,
-                borderRadius: 4,
-                padding: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                alignSelf: 'center',
-                flexDirection: 'row',
-                gap: 10,
-              }}>
+              style={styles.btnCancel}>
               <FontAwesomeIcon
                 icon={closeICon}
                 size={28}
@@ -369,8 +257,7 @@ const EditViewModal = ({
               />
               <Text
                 style={{
-                  color: COLORS.white,
-                  fontFamily: FONT.medium,
+                  ...styles.txtSave,
                   marginRight: 6,
                 }}>
                 CANCEL

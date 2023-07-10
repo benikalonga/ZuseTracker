@@ -25,6 +25,17 @@ https://github.com/benikalonga/ZuseShop/assets/29547138/5a0660af-903c-44af-8a36-
 - AboutScreen
 - SplashScreen
 
+# Important informations
+
+- Redux Toolkit for State management
+- The user can update customer details from the Customer Detail Screen.
+- The app includes a search functionality on the Home Screen, allowing the user to find a customer by name.
+- The app implements a "Recently Viewed" list, that keeps track of the last five customers viewed by the agent.
+- The app supports offline mode, allowing users to view previously loaded data when there is no internet connection.
+- The app implements navigation using React Navigation.
+- Axios for network requests.
+- Simulate the login process by storing a token in the application's state when the Login form is submitted.
+
 # Depencies and Libraries
 
 [In the Package.json file](package.json)

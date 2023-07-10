@@ -8,8 +8,8 @@ import {
   StatusBar,
   FlatList,
   RefreshControl,
-  Keyboard,
   Platform,
+  Animated,
 } from 'react-native';
 import {styles} from './styles';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -24,7 +24,7 @@ import {
   faSortNumericAsc as sortDistanceIcon,
   faUserPlus as creatCustomerIcon,
 } from '@fortawesome/free-solid-svg-icons';
-import {COLORS, FONT, SIZES} from '../../../constants/theme';
+import {COLORS, FONT} from '../../../constants/theme';
 import LoadingView from '../../common/loading/LoadingView';
 import {ErrorView} from '../../common/error/ErrorView';
 import {useDispatch, useSelector} from 'react-redux';
@@ -32,7 +32,6 @@ import {
   clearCustomer,
   getCustomers,
   updateCustomerOffline,
-  updateCustomers,
   updateCustomersSort,
 } from '../../../store/customerSlice';
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
@@ -118,7 +117,7 @@ const HomeScreen = ({navigation}) => {
   customerListDisplayed = [{id: -1}, ...customerListDisplayed];
 
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, height: '100%'}}>
+    <SafeAreaView style={styles.mainStyle}>
       <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.white} />
       <View style={styles.container}>
         {customerList && (
@@ -168,18 +167,7 @@ const HomeScreen = ({navigation}) => {
               <>
                 <Text style={{marginTop: 10}}>CONNECTION ISSUE</Text>
                 <TouchableOpacity
-                  style={{
-                    flexDirection: 'row',
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    borderRadius: 36,
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    paddingTop: 4,
-                    paddingBottom: 4,
-                    gap: 6,
-                    backgroundColor: COLORS.primary,
-                  }}
+                  style={styles.btnOffMap}
                   onPress={() => navigation.navigate('Map', OFFLINE_MODE)}>
                   <FontAwesomeIcon
                     icon={mapIcon}
@@ -195,22 +183,7 @@ const HomeScreen = ({navigation}) => {
       </View>
       {customerList && !isLoading && !errorText && (
         <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'center',
-            alignItems: 'center',
-            borderRadius: 36,
-            borderWidth: 1,
-            borderColor: COLORS.tertiary,
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingTop: 4,
-            paddingBottom: 4,
-            gap: 6,
-            position: 'absolute',
-            bottom: 16,
-            backgroundColor: COLORS.white,
-          }}
+          style={styles.btnMap}
           onPress={() => navigation.navigate('Map', 0)}>
           <FontAwesomeIcon icon={mapIcon} color={COLORS.tertiary} size={24} />
           <Text style={{color: COLORS.tertiary}}>OPEN ON THE MAP</Text>
@@ -287,51 +260,52 @@ const CustomerItem = ({
   const distance = parseFloat(
     calcDistance(userPosition, customer.location),
   ).toFixed(2);
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 800,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  const opacity = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
 
   return (
-    <TouchableOpacity
-      style={{
-        flexDirection: 'row',
-        paddingTop: 14,
-        paddingBottom: 14,
-        marginTop: 8,
-        borderRadius: SIZES.small,
-        backgroundColor: COLORS.white,
-      }}
-      onPress={() => handleClickItem(customer, index)}>
-      <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
-      <View style={{flex: 1, marginLeft: 10, gap: 6}}>
-        <Text style={{...styles.userName, color: COLORS.primary}}>
-          {customer.name}
-        </Text>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <FontAwesomeIcon icon={pin} color={COLORS.secondary} />
-          <Text
-            style={{
-              color: COLORS.secondary,
-              marginLeft: 6,
-            }}>
-            {customer.city}
-          </Text>
-        </View>
-        <Text numberOfLines={1}>{address}</Text>
-        <View style={{flexDirection: 'row', gap: 6}}>
-          <FontAwesomeIcon icon={carIcon} />
-          {distance === '0.00' ? (
-            <Text>SAME PLACE WITH YOU</Text>
-          ) : (
-            <Text style={{fontFamily: FONT.medium}}>{distance} KM</Text>
-          )}
-        </View>
-      </View>
+    <Animated.View style={{opacity}}>
       <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-        }}
-        onPress={() => handleClickMap(customer, index)}>
-        <FontAwesomeIcon icon={map} size={32} color={COLORS.secondary} />
+        style={{...styles.btnItem}}
+        onPress={() => handleClickItem(customer, index)}>
+        <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
+        <View style={styles.itemCtnr}>
+          <Text style={{...styles.userName, color: COLORS.primary}}>
+            {customer.name}
+          </Text>
+          <View style={styles.itemCtnr2}>
+            <FontAwesomeIcon icon={pin} color={COLORS.secondary} />
+            <Text style={styles.itemTxtCity}>{customer.city}</Text>
+          </View>
+          <Text numberOfLines={1}>{address}</Text>
+          <View style={styles.itemTxtDistance}>
+            <FontAwesomeIcon icon={carIcon} />
+            {distance === '0.00' ? (
+              <Text>SAME PLACE WITH YOU</Text>
+            ) : (
+              <Text style={{fontFamily: FONT.medium}}>{distance} KM</Text>
+            )}
+          </View>
+        </View>
+        <TouchableOpacity
+          style={{justifyContent: 'center'}}
+          onPress={() => handleClickMap(customer, index)}>
+          <FontAwesomeIcon icon={map} size={32} color={COLORS.secondary} />
+        </TouchableOpacity>
       </TouchableOpacity>
-    </TouchableOpacity>
+    </Animated.View>
   );
 };
 

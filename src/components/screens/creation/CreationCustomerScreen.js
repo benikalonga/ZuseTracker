@@ -1,30 +1,26 @@
-import React, {useState, createRef, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import images from '../../../constants/images';
 import * as RootNavigation from '../../../RootNavigation';
 const {
   View,
-  Image,
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
   TextInput,
   Keyboard,
   ActivityIndicator,
-  Alert,
   ToastAndroid,
   Modal,
   Animated,
 } = require('react-native');
 import {styles} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
-import {COLORS, FONT, SHADOWS} from '../../../constants/theme';
+import {COLORS, FONT} from '../../../constants/theme';
 import {
-  faSearch,
   faUserPlus as userIcon,
   faArrowLeft as backIcon,
   faLocationPin as pin,
   faMapLocationDot as mapPick,
-  faMap as mapIcon,
   faLocation as userLocationIcon,
   faPlus as mapZoomInIcon,
   faMinus as mapZoomOutIcon,
@@ -32,12 +28,12 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {addCustomer, clearCustomerAdded} from '../../../store/customerSlice';
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
-import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {getLatLongDelta} from '../../../utils/utils';
 
 /**
- * CreationCustomerScreen, post the email and password to the API and listen to the response event
- * if success, update the user object and store it in the local storage
+ * CreationCustomerScreen, post the fullname and city and location to the API and listen to the response event
+ * if success, update the customerList object
  */
 
 const MAX_ZOOM_LEVEL = 20;
@@ -81,7 +77,11 @@ const CreationCustomerScreen = () => {
 
     Keyboard.dismiss();
 
-    const city = rawAddress[4].long_name;
+    const city = rawAddress[4]
+      ? rawAddress[4].long_name
+      : rawAddress[3]
+      ? rawAddress[3].long_name
+      : '';
     dispatch(addCustomer({fullName, location, city}));
   };
 
@@ -143,26 +143,10 @@ const CreationCustomerScreen = () => {
                 {address}
               </Text>
               <TouchableOpacity
-                style={{
-                  borderRadius: 6,
-                  width: '100%',
-                  flexDirection: 'row',
-                  backgroundColor: COLORS.grey,
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                  marginVertical: 12,
-                }}
+                style={styles.btnPick}
                 onPress={() => handlePressPick()}>
                 <FontAwesomeIcon icon={mapPick} color={COLORS.primary} />
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    flex: 1,
-                    color: COLORS.primary,
-                    fontFamily: FONT.regular,
-                  }}>
-                  CHANGE LOCATION
-                </Text>
+                <Text style={styles.txtPick}>CHANGE LOCATION</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -282,12 +266,7 @@ const PickViewModal = ({
       onRequestClose={() => {
         setIsVisible(false);
       }}>
-      <View
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          flex: 1,
-          alignItems: 'center',
-        }}>
+      <View style={styles.modalCtnr}>
         <MapView
           ref={_map}
           style={styles.mapContainer}
@@ -305,34 +284,17 @@ const PickViewModal = ({
             coordinate={location}
             onPress={e => onMarkerPress(e.nativeEvent.coordinate)}>
             <Animated.View>
-              <Text
-                style={{
-                  backgroundColor: COLORS.primary,
-                  color: COLORS.white,
-                  padding: 4,
-                  borderRadius: 4,
-                }}>
-                The customer is here
-              </Text>
+              <Text style={styles.txtMarker}>The customer is here</Text>
               <Animated.Image
                 source={images.pin}
-                style={[{width: 30, height: 30, alignSelf: 'center'}]}
+                style={[styles.imgMarker]}
                 resizeMode="cover"
               />
             </Animated.View>
           </Marker>
         </MapView>
         {/* Zooms buttons */}
-        <View
-          style={{
-            position: 'absolute',
-            flexDirection: 'column',
-            zIndex: 998,
-            right: 4,
-            top: '25%',
-            backgroundColor: COLORS.white,
-            ...SHADOWS.small,
-          }}>
+        <View style={styles.zoomCtnr}>
           <TouchableOpacity
             style={{padding: 6}}
             onPress={() => handleZoom(true)}
@@ -357,22 +319,14 @@ const PickViewModal = ({
           </TouchableOpacity>
         </View>
         {/* Bottom View */}
-        <View style={{margin: 16, alignItems: 'center'}}>
+        <View style={styles.bottomCtnr}>
           <FontAwesomeIcon icon={pin} size={24} color={COLORS.white} />
           {rawAddress && (
-            <Text
-              style={{
-                color: COLORS.white,
-                fontFamily: FONT.bold,
-                fontSize: 18,
-                textAlign: 'center',
-              }}>
+            <Text style={styles.txtCity}>
               {rawAddress[4].long_name}, {rawAddress[5].long_name}
             </Text>
           )}
-          <Text
-            style={{color: COLORS.white, textAlign: 'center'}}
-            numberOfLines={3}>
+          <Text style={styles.txtAddress} numberOfLines={3}>
             {address}
           </Text>
           <TouchableOpacity
@@ -391,16 +345,7 @@ const PickViewModal = ({
         </View>
         {/* Button User Location */}
         <TouchableOpacity
-          style={{
-            position: 'absolute',
-            zIndex: 999,
-            margin: 10,
-            right: 16,
-            borderRadius: 54,
-            padding: 8,
-            backgroundColor: COLORS.white,
-            ...SHADOWS.small,
-          }}
+          style={styles.btnLocation}
           onPress={handlePressUserLocation}>
           <FontAwesomeIcon
             icon={userLocationIcon}
@@ -408,18 +353,7 @@ const PickViewModal = ({
             color={COLORS.secondary}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            zIndex: 999,
-            marginTop: 10,
-            left: 16,
-            borderRadius: 54,
-            padding: 8,
-            backgroundColor: COLORS.white,
-            ...SHADOWS.small,
-          }}
-          onPress={handlePressClose}>
+        <TouchableOpacity style={styles.btnClose} onPress={handlePressClose}>
           <FontAwesomeIcon icon={backIcon} size={22} color={COLORS.secondary} />
         </TouchableOpacity>
       </View>

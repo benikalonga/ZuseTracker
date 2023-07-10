@@ -1,29 +1,20 @@
 import React, {useState, createRef} from 'react';
-import images from '../../../constants/images';
 import * as RootNavigation from '../../../RootNavigation';
 const {
   View,
-  Image,
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
   TextInput,
   Keyboard,
   ActivityIndicator,
-  Alert,
   ToastAndroid,
 } = require('react-native');
 import {styles} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {loginUser} from '../../../store/userSlice';
 import {COLORS} from '../../../constants/theme';
-import {
-  faSearch,
-  faUserTie as userIcon,
-  faLocationPin as pin,
-  faMapLocation as map,
-  faMap as mapIcon,
-} from '@fortawesome/free-solid-svg-icons';
+import {faUserTie as userIcon} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 /**

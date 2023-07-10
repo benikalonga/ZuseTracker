@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../../constants/theme';
+import {COLORS, FONT, SHADOWS} from '../../../constants/theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -97,5 +97,69 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '70%',
     backgroundColor: COLORS.black,
+  },
+  btnPick: {
+    borderRadius: 6,
+    width: '100%',
+    flexDirection: 'row',
+    backgroundColor: COLORS.grey,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginVertical: 12,
+  },
+  txtPick: {
+    textAlign: 'center',
+    flex: 1,
+    color: COLORS.primary,
+    fontFamily: FONT.regular,
+  },
+  modalCtnr: {
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    flex: 1,
+    alignItems: 'center',
+  },
+  txtMarker: {
+    backgroundColor: COLORS.primary,
+    color: COLORS.white,
+    padding: 4,
+    borderRadius: 4,
+  },
+  imgMarker: {width: 30, height: 30, alignSelf: 'center'},
+  zoomCtnr: {
+    position: 'absolute',
+    flexDirection: 'column',
+    zIndex: 998,
+    right: 4,
+    top: '25%',
+    backgroundColor: COLORS.white,
+    ...SHADOWS.small,
+  },
+  bottomCtnr: {margin: 16, alignItems: 'center'},
+  txtCity: {
+    color: COLORS.white,
+    fontFamily: FONT.bold,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  txtAddress: {color: COLORS.white, textAlign: 'center'},
+  btnLocation: {
+    position: 'absolute',
+    zIndex: 999,
+    margin: 10,
+    right: 16,
+    borderRadius: 54,
+    padding: 8,
+    backgroundColor: COLORS.white,
+    ...SHADOWS.small,
+  },
+  btnClose: {
+    position: 'absolute',
+    zIndex: 999,
+    marginTop: 10,
+    left: 16,
+    borderRadius: 54,
+    padding: 8,
+    backgroundColor: COLORS.white,
+    ...SHADOWS.small,
   },
 });

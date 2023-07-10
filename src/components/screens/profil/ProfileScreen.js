@@ -5,13 +5,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {clearUser} from '../../../store/userSlice';
 import {
   faLocationPin as pinIcon,
-  faArrowLeft as closeICon,
   faArrowLeft as backICon,
 } from '@fortawesome/free-solid-svg-icons';
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
 import {View, Image, Text, Alert, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {COLORS, FONT, SHADOWS} from '../../../constants/theme';
+import {COLORS, FONT} from '../../../constants/theme';
 
 /** The Profile Screen component
  *
@@ -62,31 +61,14 @@ const ProfileScreen = ({navigation, route}) => {
         <Text style={styles.userInfo}>{user.email}</Text>
         <FontAwesomeIcon icon={pinIcon} size={32} />
         <Text style={{fontFamily: FONT.regular}}>You are at</Text>
-        <Text
-          style={{
-            fontFamily: FONT.bold,
-            color: COLORS.secondary,
-            textAlign: 'center',
-          }}>
-          {address}
-        </Text>
+        <Text style={styles.txtAddress}>{address}</Text>
         <TouchableOpacity
           style={styles.btnTextContainer}
           onPress={handleLogOut}>
           <Text style={styles.btnText}>Log out...</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          zIndex: 999,
-          margin: 10,
-          borderRadius: 54,
-          padding: 8,
-          backgroundColor: COLORS.white,
-          ...SHADOWS.small,
-        }}
-        onPress={handlePressBack}>
+      <TouchableOpacity style={styles.btnBack} onPress={handlePressBack}>
         <FontAwesomeIcon icon={backICon} size={22} color={COLORS.secondary} />
       </TouchableOpacity>
     </View>

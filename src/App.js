@@ -1,8 +1,8 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
  *
- * @format
+ * The main Component
+ * Uses Navigation and contains all the screens
+ *
  */
 
 import React, {useEffect} from 'react';

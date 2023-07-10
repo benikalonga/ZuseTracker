@@ -9,10 +9,8 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {useSelector} from 'react-redux';
-import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
-import haversine from 'haversine';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import PagerView from 'react-native-pager-view';
-import {Toolbar} from '../../common/Toolbar';
 import {COLORS, FONT, SHADOWS} from '../../../constants/theme';
 import images from '../../../constants/images';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -114,19 +112,11 @@ const MapScreen = ({navigation, route}) => {
               onPress={e => onMarkerPress(e, customer, index)}>
               <Animated.View>
                 {curIndex === index && (
-                  <Text
-                    style={{
-                      backgroundColor: COLORS.primary,
-                      color: COLORS.white,
-                      padding: 4,
-                      borderRadius: 4,
-                    }}>
-                    {customer.name}
-                  </Text>
+                  <Text style={styles.txtTitleMarker}>{customer.name}</Text>
                 )}
                 <Animated.Image
                   source={images.pin}
-                  style={[{width: 30, height: 30, alignSelf: 'center'}]}
+                  style={[styles.imgMarker]}
                   resizeMode="cover"
                 />
               </Animated.View>
@@ -136,18 +126,7 @@ const MapScreen = ({navigation, route}) => {
       </MapView>
       <View style={styles.topView}>
         {/* Go Back */}
-        <TouchableOpacity
-          style={{
-            borderRadius: 54,
-            width: 40,
-            height: 40,
-            padding: 6,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: COLORS.white,
-            ...SHADOWS.small,
-          }}
-          onPress={handlePressBack}>
+        <TouchableOpacity style={styles.btnBack} onPress={handlePressBack}>
           <FontAwesomeIcon
             icon={closeICon}
             size={22}
@@ -158,28 +137,13 @@ const MapScreen = ({navigation, route}) => {
           <>
             <View
               style={{
+                ...styles.headerCtnr,
                 backgroundColor:
                   route.params === OFFLINE_MODE ? COLORS.red : COLORS.white,
-                borderRadius: 56,
-                paddingLeft: 10,
-                paddingRight: 10,
-                paddingTop: 12,
-                paddingBottom: 12,
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                ...SHADOWS.medium,
               }}>
               {route.params !== OFFLINE_MODE ? (
                 <>
-                  <Text
-                    style={{
-                      fontFamily: FONT.medium,
-                      flex: 1,
-                      textAlign: 'right',
-                    }}
-                    numberOfLines={1}>
+                  <Text style={styles.txtAddress} numberOfLines={1}>
                     {address}
                   </Text>
                   <FontAwesomeIcon icon={pinIcon} />
@@ -187,8 +151,7 @@ const MapScreen = ({navigation, route}) => {
               ) : (
                 <Text
                   style={{
-                    fontFamily: FONT.medium,
-                    flex: 1,
+                    ...styles.txtAddress,
                     textAlign: 'center',
                     color: COLORS.white,
                   }}
@@ -220,42 +183,16 @@ const MapScreen = ({navigation, route}) => {
 
           return (
             <View key={index}>
-              <View
-                style={{
-                  position: 'absolute',
-                  zIndex: 999,
-                  alignSelf: 'center',
-                  backgroundColor: COLORS.white,
-                  borderRadius: 56,
-                }}>
+              <View style={styles.pgCtnr}>
                 <FontAwesomeIcon
                   icon={userCustomerIcon}
                   size={48}
                   color={COLORS.tertiary}
                 />
               </View>
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  width: CARD_WIDTH,
-                  height: '100%',
-                  alignSelf: 'center',
-                  marginTop: 24,
-                  borderTopLeftRadius: 12,
-                  borderTopRightRadius: 12,
-                  ...SHADOWS.medium,
-                }}>
-                <Image
-                  style={{width: '100%', height: 80, resizeMode: 'cover'}}
-                  source={images.logo}
-                />
-                <View
-                  style={{
-                    padding: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 4,
-                  }}>
+              <View style={styles.pgBottomCtnr(CARD_WIDTH)}>
+                <Image style={styles.imgTop} source={images.logo} />
+                <View style={styles.content}>
                   <Text style={styles.welcomeMessage}>{customer.name}</Text>
                   <View style={{flexDirection: 'row', gap: 4}}>
                     <FontAwesomeIcon icon={pinIcon} />
