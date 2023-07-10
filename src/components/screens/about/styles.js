@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../../constants/theme';
+import {COLORS, FONT, SHADOWS} from '../../../constants/theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -42,5 +42,15 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
     marginRight: 6,
     textTransform: 'uppercase',
+  },
+  txtDescrip: {fontFamily: FONT.medium, textAlign: 'justify'},
+  btnBack: {
+    position: 'absolute',
+    zIndex: 999,
+    margin: 10,
+    borderRadius: 54,
+    padding: 8,
+    backgroundColor: COLORS.white,
+    ...SHADOWS.small,
   },
 });
