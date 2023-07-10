@@ -80,8 +80,8 @@ https://github.com/benikalonga/ZuseShop/assets/29547138/5a0660af-903c-44af-8a36-
   <img src="files/55_pick_location.png" width="150" alt="accessibility text">
   <img src="files/6_new_customer_home.png" width="150" alt="accessibility text">
   <img src="files/66_map_newcustomer.png" width="150" alt="accessibility text">
-  <img src="files/error.png.png" width="150" alt="accessibility text">
-  <img src="files/offline.png.png" width="150" alt="accessibility text">
+  <img src="files/error.png" width="150" alt="accessibility text">
+  <img src="files/offline.png" width="150" alt="accessibility text">
   <img src="files/7_login_screen.png" width="150" alt="accessibility text">
   <img src="files/8_profile_screen.png" width="150" alt="accessibility text">
   <img src="files/9_about_screen.png" width="150" alt="accessibility text">
