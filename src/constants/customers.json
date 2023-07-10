@@ -1,0 +1,177 @@
+{
+  "getCustomers": [
+    {
+      "name": "John Smith",
+      "location": {
+        "latitude": -33.9249,
+        "longitude": 18.4241
+      },
+      "city": "Cape Town",
+      "id": "user1"
+    },
+    {
+      "name": "Emma Johnson",
+      "location": {
+        "latitude": -26.2041,
+        "longitude": 28.0473
+      },
+      "city": "Johannesburg",
+      "id": "user2"
+    },
+    {
+      "name": "Michael Brown",
+      "location": {
+        "latitude": -29.8587,
+        "longitude": 31.0218
+      },
+      "city": "Durban",
+      "id": "user3"
+    },
+    {
+      "name": "Sophia Davis",
+      "location": {
+        "latitude": -33.963,
+        "longitude": 25.6022
+      },
+      "city": "Port Elizabeth",
+      "id": "user4"
+    },
+    {
+      "name": "James Miller",
+      "location": {
+        "latitude": -29.6339,
+        "longitude": 30.385
+      },
+      "city": "Pietermaritzburg",
+      "id": "user5"
+    },
+    {
+      "name": "Olivia Wilson",
+      "location": {
+        "latitude": -26.1076,
+        "longitude": 28.0567
+      },
+      "city": "Pretoria",
+      "id": "user6"
+    },
+    {
+      "name": "William Taylor",
+      "location": {
+        "latitude": -25.7461,
+        "longitude": 28.1881
+      },
+      "city": "Centurion",
+      "id": "user7"
+    },
+    {
+      "name": "Ava Anderson",
+      "location": {
+        "latitude": -29.8579,
+        "longitude": 31.0292
+      },
+      "city": "Pinetown",
+      "id": "user8"
+    },
+    {
+      "name": "Alexander Martinez",
+      "location": {
+        "latitude": -26.15,
+        "longitude": 27.783
+      },
+      "city": "Johannesburg",
+      "id": "user9"
+    },
+    {
+      "name": "Mia Wilson",
+      "location": {
+        "latitude": -26.2044,
+        "longitude": 28.0456
+      },
+      "city": "Johannesburg",
+      "id": "user10"
+    }
+  ],
+  "users": [
+    {
+      "token": "C3dW8yP5lN1sG7vK2tA4qB6eX9zF0cR4oI5uM7jT2nY1bV3hU6gT9kI7mO8pL1",
+      "name": "Beni",
+      "surname": "Kalonga",
+      "username": "benikalonga",
+      "email": "benikalonga@gmail.com",
+      "password": "GBenikalong@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "A5tB2sV9kC6mN3jT7oR0cI8xP4lM6uY1nG3vK9yH4bU2gT5fI7jM9oO2pL1",
+      "name": "John",
+      "surname": "Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "password": "GJohndoe@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "K9jL2vH5fC6nM3bU8gT4yN6qR1oF7kI0sV2xP4lM9jT5cB7eX3dW1hU6mO8pL1",
+      "name": "Jane",
+      "surname": "Smith",
+      "username": "janesmith",
+      "email": "janesmith@gmail.com",
+      "password": "GJanesmith@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "C4vB7nM0jT3kI6bH9yN2uK5iO8pL1sG3fV6mT9nY2bV5hU7gT4kI6mO1jK9pL7",
+      "name": "Michael",
+      "surname": "Johnson",
+      "username": "michaeljohnson",
+      "email": "michaeljohnson@gmail.com",
+      "password": "GMichaeljohnson@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "Y9bV2hU5gT8kI3mN6jT4cB7eX0dW1rF7oI5uM3jN6kV4hU1gT8kI7mO9pL2",
+      "name": "Emily",
+      "surname": "Williams",
+      "username": "emilywilliams",
+      "email": "emilywilliams@gmail.com",
+      "password": "GEmilywilliams@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "B6eX3dW8yP5lN2kC4mV7jT9nY1bV3hU6gT9kI7mO0pL1sG4fV6mT5nY7bV2hU3",
+      "name": "Daniel",
+      "surname": "Brown",
+      "username": "danielbrown",
+      "email": "danielbrown@gmail.com",
+      "password": "GDanielbrown@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "N9kC2mV5jT8nY3bV6hU0gT4kI7mO5jT2cB7eX9dW1rF6oI3uM4jN1kC9mV7jT4",
+      "name": "Sophia",
+      "surname": "Miller",
+      "username": "sophiamiller",
+      "email": "sophiamiller@gmail.com",
+      "password": "GSophiamiller@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "P4lM7jT2nY5bV8hU1gT3kI6mO9pL2sG5fV2mT7nY0bV4hU6gT9kI7mO1jK3",
+      "name": "Oliver",
+      "surname": "Wilson",
+      "username": "oliverwilson",
+      "email": "oliverwilson@gmail.com",
+      "password": "GOliverwilson@2",
+      "profile": "image_profile"
+    },
+    {
+      "token": "B2sV5kC8mN1jT6oR4cI7xP0lM3uY6nG9vK1yH4bU7gT5fI2jM9oO7pL1",
+      "name": "Emma",
+      "surname": "Taylor",
+      "username": "emmataylor",
+      "email": "emmataylor@gmail.com",
+      "password": "GEmmataylor@2",
+      "profile": "image_profile"
+    }
+  ]
+}
