@@ -148,7 +148,7 @@ const customerSlice = createSlice({
     });
     builder.addCase(getCustomersOffline.pending, state => {});
     builder.addCase(getCustomersOffline.fulfilled, (state, action) => {
-      state.customersOffline = action.payload;
+      state.customersOffline = action.payload ? action.payload : [];
     });
     builder.addCase(getCustomersOffline.rejected, (state, action) => {});
     builder.addCase(addCustomer.pending, state => {

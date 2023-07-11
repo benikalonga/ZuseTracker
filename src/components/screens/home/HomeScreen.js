@@ -37,6 +37,8 @@ import {
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
 import {calcDistance} from '../../../utils/utils';
 import * as RootNavigation from '../../../RootNavigation';
+import {SharedElement} from 'react-navigation-shared-element';
+import {Toolbar} from '../../common/Toolbar';
 
 /**
  * The HomeScreen component
@@ -119,6 +121,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.mainStyle}>
       <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.white} />
+      <Toolbar />
       <View style={styles.container}>
         {customerList && (
           <FlatList
@@ -152,7 +155,7 @@ const HomeScreen = ({navigation}) => {
             ListHeaderComponent={<HeaderList />}
             contentContainerStyle={{
               rowGap: 10,
-              paddingBottom: Platform.OS === 'android' ? 48 : 0,
+              paddingBottom: Platform.OS === 'android' ? 132 : 0,
             }}
             ItemSeparatorComponent={
               <View style={{height: 1, backgroundColor: COLORS.grey}} />
@@ -238,11 +241,13 @@ const SearchView = ({
         <TouchableOpacity
           style={{...styles.searchBtn(), backgroundColor: COLORS.grey}}
           onPress={handleCreateCustomer}>
-          <FontAwesomeIcon
-            icon={creatCustomerIcon}
-            color={COLORS.secondary}
-            size={24}
-          />
+          <SharedElement id="btnCreateCustomerId">
+            <FontAwesomeIcon
+              icon={creatCustomerIcon}
+              color={COLORS.secondary}
+              size={24}
+            />
+          </SharedElement>
         </TouchableOpacity>
       )}
     </View>
@@ -276,37 +281,51 @@ const CustomerItem = ({
   });
 
   return (
-    <Animated.View style={{opacity}}>
-      <TouchableOpacity
-        style={{...styles.btnItem}}
-        onPress={() => handleClickItem(customer, index)}>
-        <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
-        <View style={styles.itemCtnr}>
-          <Text style={{...styles.userName, color: COLORS.primary}}>
-            {customer.name}
-          </Text>
-          <View style={styles.itemCtnr2}>
-            <FontAwesomeIcon icon={pin} color={COLORS.secondary} />
-            <Text style={styles.itemTxtCity}>{customer.city}</Text>
-          </View>
-          <Text numberOfLines={1}>{address}</Text>
-          <View style={styles.itemTxtDistance}>
-            <FontAwesomeIcon icon={carIcon} />
-            {distance === '0.00' ? (
-              <Text>SAME PLACE WITH YOU</Text>
-            ) : (
-              <Text style={{fontFamily: FONT.medium}}>{distance} KM</Text>
-            )}
-          </View>
+    <TouchableOpacity
+      style={{...styles.btnItem}}
+      onPress={() => handleClickItem(customer, index)}>
+      <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
+      <View style={styles.itemCtnr}>
+        <Text style={{...styles.userName, color: COLORS.primary}}>
+          {customer.name}
+        </Text>
+        <View style={styles.itemCtnr2}>
+          <FontAwesomeIcon icon={pin} color={COLORS.secondary} />
+          <Text style={styles.itemTxtCity}>{customer.city}</Text>
         </View>
-        <TouchableOpacity
-          style={{justifyContent: 'center'}}
-          onPress={() => handleClickMap(customer, index)}>
-          <FontAwesomeIcon icon={map} size={32} color={COLORS.secondary} />
-        </TouchableOpacity>
+        <Text numberOfLines={1}>{address}</Text>
+        <View style={styles.itemTxtDistance}>
+          <FontAwesomeIcon icon={carIcon} />
+          {distance === '0.00' ? (
+            <Text>SAME PLACE WITH YOU</Text>
+          ) : (
+            <Text style={{fontFamily: FONT.medium}}>{distance} KM</Text>
+          )}
+        </View>
+      </View>
+      <TouchableOpacity
+        style={{justifyContent: 'center'}}
+        onPress={() => handleClickMap(customer, index)}>
+        <FontAwesomeIcon icon={map} size={32} color={COLORS.secondary} />
       </TouchableOpacity>
-    </Animated.View>
+    </TouchableOpacity>
   );
+};
+HomeScreen.sharedElements = route => {
+  return [
+    {
+      id: 'btnLogo',
+    },
+    {
+      id: 'btnUserConnectedId',
+    },
+    {
+      id: 'btnUserId',
+    },
+    {
+      id: 'btnCreateCustomerId',
+    },
+  ];
 };
 
 export default HomeScreen;

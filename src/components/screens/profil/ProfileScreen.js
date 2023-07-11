@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import * as RootNavigation from '../../../RootNavigation';
 import {styles} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
@@ -8,9 +8,17 @@ import {
   faArrowLeft as backICon,
 } from '@fortawesome/free-solid-svg-icons';
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
-import {View, Image, Text, Alert, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  Alert,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {COLORS, FONT} from '../../../constants/theme';
+import {SharedElement} from 'react-navigation-shared-element';
 
 /** The Profile Screen component
  *
@@ -50,23 +58,44 @@ const ProfileScreen = ({navigation, route}) => {
   const handlePressBack = () => {
     RootNavigation.goBack();
   };
+
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+      delay: 100,
+    }).start();
+  }, []);
+
+  const opacity = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Image style={styles.avatar} source={user.profile} />
-        <Text>@{user.username}</Text>
-        <Text style={styles.name}>
-          {user.name} {user.surname}
-        </Text>
-        <Text style={styles.userInfo}>{user.email}</Text>
-        <FontAwesomeIcon icon={pinIcon} size={32} />
-        <Text style={{fontFamily: FONT.regular}}>You are at</Text>
-        <Text style={styles.txtAddress}>{address}</Text>
-        <TouchableOpacity
-          style={styles.btnTextContainer}
-          onPress={handleLogOut}>
-          <Text style={styles.btnText}>Log out...</Text>
-        </TouchableOpacity>
+        <SharedElement id="btnUserConnectedId">
+          <Image style={styles.avatar} source={user.profile} />
+        </SharedElement>
+        <Animated.View style={{...styles.content, opacity}}>
+          <Text>@{user.username}</Text>
+          <Text style={styles.name}>
+            {user.name} {user.surname}
+          </Text>
+          <Text style={styles.userInfo}>{user.email}</Text>
+          <FontAwesomeIcon icon={pinIcon} size={32} />
+          <Text style={{fontFamily: FONT.regular}}>You are at</Text>
+          <Text style={styles.txtAddress}>{address}</Text>
+          <TouchableOpacity
+            style={styles.btnTextContainer}
+            onPress={handleLogOut}>
+            <Text style={styles.btnText}>Log out...</Text>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
       <TouchableOpacity style={styles.btnBack} onPress={handlePressBack}>
         <FontAwesomeIcon icon={backICon} size={22} color={COLORS.secondary} />
@@ -74,5 +103,7 @@ const ProfileScreen = ({navigation, route}) => {
     </View>
   );
 };
-
+ProfileScreen.sharedElements = route => {
+  return [{id: 'btnUserConnectedId', otherId: 'btnUserConnectedId'}];
+};
 export default ProfileScreen;

@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, Dimensions, SafeAreaView} from 'react-native';
 import images from '../../../constants/images';
 import {styles} from './styles';
+import {SharedElement} from 'react-navigation-shared-element';
 
 const {width} = Dimensions.get('window');
 
@@ -16,7 +17,9 @@ const SplashScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={images.logo} style={styles.image(width)} />
+      <SharedElement id="btnLogo">
+        <Image source={images.logo} style={styles.image(width)} />
+      </SharedElement>
     </SafeAreaView>
   );
 };

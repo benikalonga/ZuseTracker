@@ -74,7 +74,6 @@ const DetailScreen = ({navigation, route}) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <FontAwesomeIcon icon={userIcon} size={120} color={COLORS.gray2} />
-
           <Text style={styles.welcomeMessage}>
             {routeCustomer.name}
             {customer.age && ', ' + customer.age}
@@ -142,6 +141,7 @@ const DetailScreen = ({navigation, route}) => {
           </View>
         )}
       </View>
+
       <TouchableOpacity style={styles.btnBack} onPress={handlePressBack}>
         <FontAwesomeIcon icon={backICon} size={22} color={COLORS.secondary} />
       </TouchableOpacity>
@@ -269,5 +269,4 @@ const EditViewModal = ({
     </Modal>
   );
 };
-
 export default DetailScreen;

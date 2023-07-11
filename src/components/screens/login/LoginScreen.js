@@ -1,4 +1,4 @@
-import React, {useState, createRef} from 'react';
+import React, {useState, createRef, useRef, useEffect} from 'react';
 import * as RootNavigation from '../../../RootNavigation';
 const {
   View,
@@ -9,6 +9,7 @@ const {
   Keyboard,
   ActivityIndicator,
   ToastAndroid,
+  Animated,
 } = require('react-native');
 import {styles} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,6 +17,7 @@ import {loginUser} from '../../../store/userSlice';
 import {COLORS} from '../../../constants/theme';
 import {faUserTie as userIcon} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {SharedElement} from 'react-navigation-shared-element';
 
 /**
  * LoginScreen, post the email and password to the API and listen to the response event
@@ -61,67 +63,97 @@ const LoginScreen = () => {
     RootNavigation.goBack();
   };
 
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+      delay: 300,
+    }).start();
+  }, []);
+
+  const opacity = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView enabled>
         <View style={styles.content}>
-          <FontAwesomeIcon icon={userIcon} size={82} />
+          <SharedElement id="btnUserId">
+            <FontAwesomeIcon icon={userIcon} size={82} />
+          </SharedElement>
           <Text style={styles.titleText}>Get access every where</Text>
           <Text>Log in to use all the features</Text>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={UserEmail => setUserEmail(UserEmail)}
-            placeholder="Enter Email"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onSubmitEditing={() =>
-              passwordInputRef.current && passwordInputRef.current.focus()
-            }
-            underlineColorAndroid="#f000"
-            blurOnSubmit={false}
-            color={COLORS.black}
-          />
-          {emailError && <Text style={styles.inputError}>{emailError}</Text>}
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={UserPassword => setUserPassword(UserPassword)}
-            placeholder="Enter Password"
-            placeholderTextColor="#8b9cb5"
-            keyboardType="default"
-            ref={passwordInputRef}
-            onSubmitEditing={Keyboard.dismiss}
-            blurOnSubmit={false}
-            secureTextEntry={true}
-            underlineColorAndroid="#f000"
-            returnKeyType="next"
-            color={COLORS.black}
-          />
+          <Animated.View
+            style={{
+              ...styles.content,
+              width: '100%',
+              paddingHorizontal: 0,
+              marginTop: 0,
+              opacity,
+            }}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={UserEmail => setUserEmail(UserEmail)}
+              placeholder="Enter Email"
+              placeholderTextColor="#8b9cb5"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                passwordInputRef.current && passwordInputRef.current.focus()
+              }
+              underlineColorAndroid="#f000"
+              blurOnSubmit={false}
+              color={COLORS.black}
+            />
+            {emailError && <Text style={styles.inputError}>{emailError}</Text>}
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={UserPassword => setUserPassword(UserPassword)}
+              placeholder="Enter Password"
+              placeholderTextColor="#8b9cb5"
+              keyboardType="default"
+              ref={passwordInputRef}
+              onSubmitEditing={Keyboard.dismiss}
+              blurOnSubmit={false}
+              secureTextEntry={true}
+              underlineColorAndroid="#f000"
+              returnKeyType="next"
+              color={COLORS.black}
+            />
 
-          {passwordError && (
-            <Text style={styles.inputError}>{passwordError}</Text>
-          )}
+            {passwordError && (
+              <Text style={styles.inputError}>{passwordError}</Text>
+            )}
 
-          {errorText?.message ? <Text>{errorText}</Text> : null}
+            {errorText?.message ? <Text>{errorText}</Text> : null}
 
-          <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={styles.btnTextContainer}
-              onPress={handleLogIn}>
-              <Text style={styles.btnText}>Log in</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btnTextContainerOutline}
-              onPress={handleCancel}>
-              <Text style={styles.btnTextOutline}>Cancel</Text>
-            </TouchableOpacity>
-            {isLoading && <ActivityIndicator size="large" />}
-          </View>
+            <View style={styles.btnContainer}>
+              <TouchableOpacity
+                style={styles.btnTextContainer}
+                onPress={handleLogIn}>
+                <Text style={styles.btnText}>Log in</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.btnTextContainerOutline}
+                onPress={handleCancel}>
+                <Text style={styles.btnTextOutline}>Cancel</Text>
+              </TouchableOpacity>
+              {isLoading && <ActivityIndicator size="large" />}
+            </View>
+          </Animated.View>
         </View>
       </KeyboardAvoidingView>
     </View>
   );
 };
 
+LoginScreen.sharedElements = route => {
+  return [{id: 'btnUserId', otherId: 'btnUserId'}];
+};
 export default LoginScreen;

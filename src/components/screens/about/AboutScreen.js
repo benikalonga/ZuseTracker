@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import * as RootNavigation from '../../../RootNavigation';
 import {styles} from './styles';
 import {faArrowLeft as backICon} from '@fortawesome/free-solid-svg-icons';
-import {View, Image, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {COLORS} from '../../../constants/theme';
 import images from '../../../constants/images';
+import {SharedElement} from 'react-navigation-shared-element';
 
 /**
  * The AboutScreen component
@@ -15,12 +23,32 @@ const AboutScreen = () => {
   const handlePressBack = () => {
     RootNavigation.goBack();
   };
+
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+      delay: 300,
+    }).start();
+  }, []);
+
+  const opacity = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
   return (
     <>
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.content}>
-            <Image style={styles.avatar} source={images.logo} />
+            <SharedElement id="btnLogo">
+              <Image style={styles.avatar} source={images.logo} />
+            </SharedElement>
+
             <Text style={{...styles.name, color: COLORS.primary}}>
               ZuseTracker
             </Text>
@@ -28,7 +56,7 @@ const AboutScreen = () => {
             <Text style={styles.name}>Beni Kalonga</Text>
             <Text style={styles.userInfo}>React Native Developer</Text>
             <Text style={styles.name}>Zuse Technology</Text>
-            <View style={{width: '100%'}}>
+            <Animated.View style={{width: '100%', opacity}}>
               <Text style={styles.userInfo}>Description</Text>
               <Text style={styles.txtDescrip}>
                 1. Home Screen: The landing page of the app. It should display a
@@ -73,7 +101,7 @@ const AboutScreen = () => {
               <Text style={styles.txtDescrip}>
                 8. About Screen: This screen show the info about the app.
               </Text>
-            </View>
+            </Animated.View>
           </View>
         </View>
       </ScrollView>
@@ -83,5 +111,8 @@ const AboutScreen = () => {
     </>
   );
 };
-
+AboutScreen.sharedElements = route => {
+  console.log(route.params);
+  return [{id: 'btnLogo', otherId: 'btnLogo'}];
+};
 export default AboutScreen;

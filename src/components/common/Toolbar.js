@@ -24,6 +24,7 @@ import {
 import haversine from 'haversine';
 import {useGeoCoding} from '../../hooks/useGeoCoding';
 import {calcDistance} from '../../utils/utils';
+import {SharedElement} from 'react-navigation-shared-element';
 
 export const Toolbar = () => {
   const user = useSelector(state => state.user.user);
@@ -62,7 +63,9 @@ export const Toolbar = () => {
         <TouchableOpacity
           style={styles.btnToolBar(46)}
           onPress={() => RootNavigation.navigate('About')}>
-          <Image source={images.logo} style={styles.image(28)} />
+          <SharedElement id="btnLogo">
+            <Image source={images.logo} style={styles.image(28)} />
+          </SharedElement>
         </TouchableOpacity>
       </View>
       {user.token && (
@@ -86,11 +89,15 @@ export const Toolbar = () => {
       <View style={{flexDirection: 'row'}}>
         {user.token ? (
           <TouchableOpacity onPress={handleProfile} style={styles.btnToolBar}>
-            <Image source={user.profile} style={styles.image(42)} />
+            <SharedElement id="btnUserConnectedId">
+              <Image source={user.profile} style={styles.image(42)} />
+            </SharedElement>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.btnToolBar(46)} onPress={handleLogin}>
-            <FontAwesomeIcon icon={userIcon} size={24} color={COLORS.gray} />
+            <SharedElement id="btnUserId">
+              <FontAwesomeIcon icon={userIcon} size={24} color={COLORS.gray} />
+            </SharedElement>
           </TouchableOpacity>
         )}
       </View>

@@ -26,8 +26,9 @@ import {updateCurPosition, updateInitPosition} from './store/userSlice';
 import {getCustomersOffline} from './store/customerSlice';
 import AboutScreen from './components/screens/about/AboutScreen';
 import CreationCustomerScreen from './components/screens/creation/CreationCustomerScreen';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -67,8 +68,7 @@ const Main = () => {
         <Stack.Screen
           name="Home"
           options={{
-            header: () => <Toolbar />,
-            headerShown: true,
+            headerShown: false,
           }}
           component={HomeScreen}
         />

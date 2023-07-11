@@ -25,6 +25,7 @@ import {
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
 import * as RootNavigation from '../../../RootNavigation';
 import {calcDistance} from '../../../utils/utils';
+import {SharedElement} from 'react-navigation-shared-element';
 
 const {width} = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
@@ -163,12 +164,16 @@ const MapScreen = ({navigation, route}) => {
             <TouchableOpacity
               onPress={handleProfile}
               style={{...styles.btnToolBar, ...SHADOWS.medium}}>
-              <Image source={user.profile} style={styles.image(42)} />
+              <SharedElement id="btnUserConnectedId">
+                <Image source={user.profile} style={styles.image(42)} />
+              </SharedElement>
             </TouchableOpacity>
           </>
         ) : (
           <TouchableOpacity style={styles.btnToolBar(36)} onPress={handleLogin}>
-            <FontAwesomeIcon icon={userIcon} size={24} color={COLORS.gray} />
+            <SharedElement id="btnUserId">
+              <FontAwesomeIcon icon={userIcon} size={24} color={COLORS.gray} />
+            </SharedElement>
           </TouchableOpacity>
         )}
       </View>

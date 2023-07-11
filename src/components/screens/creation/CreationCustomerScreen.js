@@ -30,6 +30,7 @@ import {addCustomer, clearCustomerAdded} from '../../../store/customerSlice';
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {getLatLongDelta} from '../../../utils/utils';
+import {SharedElement} from 'react-navigation-shared-element';
 
 /**
  * CreationCustomerScreen, post the fullname and city and location to the API and listen to the response event
@@ -98,7 +99,9 @@ const CreationCustomerScreen = () => {
     <View style={styles.container}>
       <KeyboardAvoidingView enabled>
         <View style={styles.content}>
-          <FontAwesomeIcon icon={userIcon} size={82} />
+          <SharedElement id="btnCreateCustomerId">
+            <FontAwesomeIcon icon={userIcon} size={82} />
+          </SharedElement>
           <Text style={styles.titleText}>Add a customer</Text>
 
           <View style={styles.inputContainer}>
@@ -359,6 +362,13 @@ const PickViewModal = ({
       </View>
     </Modal>
   );
+};
+CreationCustomerScreen.sharedElements = route => {
+  return [
+    {
+      id: 'btnCreateCustomerId',
+    },
+  ];
 };
 
 export default CreationCustomerScreen;
