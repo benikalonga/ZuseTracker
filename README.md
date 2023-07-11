@@ -12,7 +12,7 @@
 
 ### Here is a video showing how it works
 
-https://github.com/benikalonga/ZuseShop/assets/29547138/5a0660af-903c-44af-8a36-05ccd53ba0fa
+https://github.com/benikalonga/ZuseTracker/assets/29547138/95a3123b-29cd-429f-9ad2-570939b059cf
 
 # Features
 
