@@ -8,7 +8,6 @@
 import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from './components/screens/splash/SplashScreen';
 import HomeScreen from './components/screens/home/HomeScreen';
 import {COLORS} from './constants/theme';
@@ -17,7 +16,6 @@ import DetailScreen from './components/screens/detail/DetailScreen';
 
 import {Provider, useDispatch} from 'react-redux';
 import {store} from './store/store';
-import {Toolbar} from './components/common/Toolbar';
 import LoginScreen from './components/screens/login/LoginScreen';
 import * as RootNavigation from './RootNavigation';
 import ProfileScreen from './components/screens/profil/ProfileScreen';
@@ -36,22 +34,42 @@ const Main = () => {
   useEffect(() => {
     dispatch(getCustomersOffline());
 
-    Geolocation.getCurrentPosition(pos => {
-      const latitude = pos.coords.latitude;
-      const longitude = pos.coords.longitude;
-      const position = {latitude, longitude};
-      dispatch(updateCurPosition(position));
-      dispatch(updateInitPosition(position));
+    Geolocation.getCurrentPosition(
+      pos => {
+        const latitude = pos.coords.latitude;
+        const longitude = pos.coords.longitude;
+        const position = {latitude, longitude};
 
-      console.log('Update INit pos');
-    });
-    const watchID = Geolocation.watchPosition(pos => {
-      const latitude = pos.coords.latitude;
-      const longitude = pos.coords.longitude;
-      dispatch(updateCurPosition({latitude, longitude}));
+        console.log(position);
 
-      console.log('Update cur Position');
-    });
+        dispatch(updateCurPosition(position));
+        dispatch(updateInitPosition(position));
+      },
+      error => {
+        console.error(error);
+      },
+      {
+        timeout: 15000,
+        maximumAge: 10000,
+        enableHighAccuracy: true,
+      },
+    );
+    const watchID = Geolocation.watchPosition(
+      pos => {
+        const latitude = pos.coords.latitude;
+        const longitude = pos.coords.longitude;
+        dispatch(updateCurPosition({latitude, longitude}));
+
+        console.log('Update cur Position');
+      },
+      error => {
+        console.error(error);
+      },
+      {
+        enableHighAccuracy: true,
+        useSignificantChanges: true,
+      },
+    );
     return () => {
       Geolocation.clearWatch(watchID);
       console.log('CLose watch');

@@ -39,7 +39,8 @@ export const Toolbar = () => {
 
   const distTraveled = useRef(0.0);
 
-  distTraveled.current = calcDistance(initPosition, curPosition);
+  distTraveled.current =
+    distTraveled.current + calcDistance(initPosition, curPosition);
   const distance = parseFloat(distTraveled.current).toFixed(2);
 
   const [address] = useGeoCoding(curPosition);
