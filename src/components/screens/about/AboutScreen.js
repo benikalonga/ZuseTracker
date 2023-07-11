@@ -14,6 +14,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {COLORS} from '../../../constants/theme';
 import images from '../../../constants/images';
 import {SharedElement} from 'react-navigation-shared-element';
+import {useOpacityAnimation} from '../../../utils/utils';
 
 /**
  * The AboutScreen component
@@ -24,21 +25,7 @@ const AboutScreen = () => {
     RootNavigation.goBack();
   };
 
-  const animatedValue = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-      delay: 300,
-    }).start();
-  }, []);
-
-  const opacity = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
+  const opacity = useOpacityAnimation(500, 300);
 
   return (
     <>

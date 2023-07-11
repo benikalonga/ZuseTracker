@@ -18,6 +18,7 @@ import {COLORS} from '../../../constants/theme';
 import {faUserTie as userIcon} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {SharedElement} from 'react-navigation-shared-element';
+import {useOpacityAnimation} from '../../../utils/utils';
 
 /**
  * LoginScreen, post the email and password to the API and listen to the response event
@@ -62,22 +63,7 @@ const LoginScreen = () => {
   const handleCancel = () => {
     RootNavigation.goBack();
   };
-
-  const animatedValue = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-      delay: 300,
-    }).start();
-  }, []);
-
-  const opacity = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
+  const opacity = useOpacityAnimation(500, 300);
 
   return (
     <View style={styles.container}>

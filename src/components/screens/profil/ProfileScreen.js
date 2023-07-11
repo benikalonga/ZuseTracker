@@ -15,10 +15,12 @@ import {
   Alert,
   TouchableOpacity,
   Animated,
+  Dimensions,
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {COLORS, FONT} from '../../../constants/theme';
 import {SharedElement} from 'react-navigation-shared-element';
+import {useOpacityAnimation} from '../../../utils/utils';
 
 /** The Profile Screen component
  *
@@ -26,6 +28,8 @@ import {SharedElement} from 'react-navigation-shared-element';
  * Populate the component
  * Handle the logout feature
  */
+
+const {width} = Dimensions.get('window');
 
 const ProfileScreen = ({navigation, route}) => {
   const curPosition = useSelector(state => state.user.position);
@@ -59,27 +63,13 @@ const ProfileScreen = ({navigation, route}) => {
     RootNavigation.goBack();
   };
 
-  const animatedValue = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-      delay: 100,
-    }).start();
-  }, []);
-
-  const opacity = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
+  const opacity = useOpacityAnimation(500, 100);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <SharedElement id="btnUserConnectedId">
-          <Image style={styles.avatar} source={user.profile} />
+          <Image style={styles.avatar(width)} source={user.profile} />
         </SharedElement>
         <Animated.View style={{...styles.content, opacity}}>
           <Text>@{user.username}</Text>

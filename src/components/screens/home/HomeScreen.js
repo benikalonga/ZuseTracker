@@ -35,7 +35,7 @@ import {
   updateCustomersSort,
 } from '../../../store/customerSlice';
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
-import {calcDistance} from '../../../utils/utils';
+import {calcDistance, useOpacityAnimation} from '../../../utils/utils';
 import * as RootNavigation from '../../../RootNavigation';
 import {SharedElement} from 'react-navigation-shared-element';
 import {Toolbar} from '../../common/Toolbar';
@@ -265,50 +265,40 @@ const CustomerItem = ({
   const distance = parseFloat(
     calcDistance(userPosition, customer.location),
   ).toFixed(2);
-  const animatedValue = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 800,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
-  const opacity = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
+  const opacity = useOpacityAnimation(100, 0);
 
   return (
-    <TouchableOpacity
-      style={{...styles.btnItem}}
-      onPress={() => handleClickItem(customer, index)}>
-      <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
-      <View style={styles.itemCtnr}>
-        <Text style={{...styles.userName, color: COLORS.primary}}>
-          {customer.name}
-        </Text>
-        <View style={styles.itemCtnr2}>
-          <FontAwesomeIcon icon={pin} color={COLORS.secondary} />
-          <Text style={styles.itemTxtCity}>{customer.city}</Text>
-        </View>
-        <Text numberOfLines={1}>{address}</Text>
-        <View style={styles.itemTxtDistance}>
-          <FontAwesomeIcon icon={carIcon} />
-          {distance === '0.00' ? (
-            <Text>SAME PLACE WITH YOU</Text>
-          ) : (
-            <Text style={{fontFamily: FONT.medium}}>{distance} KM</Text>
-          )}
-        </View>
-      </View>
+    <Animated.View style={{opacity}}>
       <TouchableOpacity
-        style={{justifyContent: 'center'}}
-        onPress={() => handleClickMap(customer, index)}>
-        <FontAwesomeIcon icon={map} size={32} color={COLORS.secondary} />
+        style={{...styles.btnItem}}
+        onPress={() => handleClickItem(customer, index)}>
+        <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
+        <View style={styles.itemCtnr}>
+          <Text style={{...styles.userName, color: COLORS.primary}}>
+            {customer.name}
+          </Text>
+          <View style={styles.itemCtnr2}>
+            <FontAwesomeIcon icon={pin} color={COLORS.secondary} />
+            <Text style={styles.itemTxtCity}>{customer.city}</Text>
+          </View>
+          <Text numberOfLines={1}>{address}</Text>
+          <View style={styles.itemTxtDistance}>
+            <FontAwesomeIcon icon={carIcon} />
+            {distance === '0.00' ? (
+              <Text>SAME PLACE WITH YOU</Text>
+            ) : (
+              <Text style={{fontFamily: FONT.medium}}>{distance} KM</Text>
+            )}
+          </View>
+        </View>
+        <TouchableOpacity
+          style={{justifyContent: 'center'}}
+          onPress={() => handleClickMap(customer, index)}>
+          <FontAwesomeIcon icon={map} size={32} color={COLORS.secondary} />
+        </TouchableOpacity>
       </TouchableOpacity>
-    </TouchableOpacity>
+    </Animated.View>
   );
 };
 HomeScreen.sharedElements = route => {

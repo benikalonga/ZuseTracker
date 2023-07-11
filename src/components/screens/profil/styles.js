@@ -5,20 +5,19 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    paddingTop: 40,
   },
   content: {
-    justifyContent: 'center',
     alignItems: 'center',
     gap: 5,
-    margin: 30,
+    marginHorizontal: 30,
   },
-  avatar: {
-    width: 200,
-    height: 200,
+  avatar: width => ({
+    width: width,
     resizeMode: 'cover',
-    borderRadius: 40,
-  },
+    backgroundColor: COLORS.black,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+  }),
   name: {
     color: COLORS.black,
     fontWeight: 'bold',
