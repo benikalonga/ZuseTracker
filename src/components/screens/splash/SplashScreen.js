@@ -24,4 +24,12 @@ const SplashScreen = ({navigation}) => {
   );
 };
 
+SplashScreen.sharedElements = route => {
+  return [
+    {
+      id: 'btnLogo',
+    },
+  ];
+};
+
 export default SplashScreen;

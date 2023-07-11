@@ -29,6 +29,7 @@ import {ErrorView} from '../../common/error/ErrorView';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCustomerById, updateCustomer} from '../../../store/customerSlice';
 import {useGeoCoding} from '../../../hooks/useGeoCoding';
+import {SharedElement} from 'react-navigation-shared-element';
 
 /**
  * The Detail component
@@ -73,11 +74,15 @@ const DetailScreen = ({navigation, route}) => {
       <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.white} />
       <View style={styles.container}>
         <View style={styles.header}>
-          <FontAwesomeIcon icon={userIcon} size={120} color={COLORS.gray2} />
-          <Text style={styles.welcomeMessage}>
-            {routeCustomer.name}
-            {customer.age && ', ' + customer.age}
-          </Text>
+          <SharedElement id={`customer.${route.params.customer.id}.icon`}>
+            <FontAwesomeIcon icon={userIcon} size={120} color={COLORS.gray2} />
+          </SharedElement>
+          <SharedElement id={`customer.${route.params.customer.id}.txt`}>
+            <Text style={{...styles.userName, color: COLORS.primary}}>
+              {routeCustomer.name}
+              {customer.age && ', ' + customer.age}
+            </Text>
+          </SharedElement>
         </View>
         {isLoading && <LoadingView />}
         {errorText && <ErrorView onRefresh={reFetch} />}
@@ -269,4 +274,19 @@ const EditViewModal = ({
     </Modal>
   );
 };
+
+DetailScreen.sharedElements = route => {
+  const customer = route.params.customer;
+  return [
+    {
+      id: `customer.${customer.id}.icon`,
+    },
+    {
+      id: `customer.${customer.id}.txt`,
+      animation: '',
+      resize: 'clip',
+    },
+  ];
+};
+
 export default DetailScreen;

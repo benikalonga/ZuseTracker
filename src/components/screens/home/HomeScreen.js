@@ -273,11 +273,16 @@ const CustomerItem = ({
       <TouchableOpacity
         style={{...styles.btnItem}}
         onPress={() => handleClickItem(customer, index)}>
-        <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
+        <SharedElement id={`customer.${customer.id}.icon`}>
+          <FontAwesomeIcon icon={userIcon} size={54} color={COLORS.gray2} />
+        </SharedElement>
         <View style={styles.itemCtnr}>
-          <Text style={{...styles.userName, color: COLORS.primary}}>
-            {customer.name}
-          </Text>
+          <SharedElement id={`customer.${customer.id}.txt`}>
+            <Text style={{...styles.userName, color: COLORS.primary}}>
+              {customer.name}
+            </Text>
+          </SharedElement>
+
           <View style={styles.itemCtnr2}>
             <FontAwesomeIcon icon={pin} color={COLORS.secondary} />
             <Text style={styles.itemTxtCity}>{customer.city}</Text>
@@ -300,22 +305,6 @@ const CustomerItem = ({
       </TouchableOpacity>
     </Animated.View>
   );
-};
-HomeScreen.sharedElements = route => {
-  return [
-    {
-      id: 'btnLogo',
-    },
-    {
-      id: 'btnUserConnectedId',
-    },
-    {
-      id: 'btnUserId',
-    },
-    {
-      id: 'btnCreateCustomerId',
-    },
-  ];
 };
 
 export default HomeScreen;
