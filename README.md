@@ -6,13 +6,17 @@
 
 - To run the project, Clone the app [ZuseTracker](https://github.com/benikalonga/ZuseTracker.git) 👍
 - Open the CMD, and change the directory to the root (e.g CD ''../../ZuseTracker'')
-- Run the command npm to install all the dependancies
+- Run the command npm install to install all the dependancies
 - Run npm start to start the server
 - Run npx react-native run-android to run on a android device or npx react-native run-ios to run on a iOS device
 
 ### Here is a video showing how it works
 
-https://github.com/benikalonga/ZuseTracker/assets/29547138/95a3123b-29cd-429f-9ad2-570939b059cf
+
+https://github.com/benikalonga/ZuseTracker/assets/29547138/7f585d9f-8530-4ece-be26-b13e0584e1f5
+
+
+
 
 # Features
 
@@ -31,6 +35,7 @@ https://github.com/benikalonga/ZuseTracker/assets/29547138/95a3123b-29cd-429f-9a
 - The user can update customer details from the Customer Detail Screen.
 - The app includes a search functionality on the Home Screen, allowing the user to find a customer by name.
 - The app implements a "Recently Viewed" list, that keeps track of the last five customers viewed by the agent.
+- The app uses React Navigation Shared Element for smooth transition between screens and Animated to animate Views
 - The app supports offline mode, allowing users to view previously loaded data when there is no internet connection.
 - The app implements navigation using React Navigation.
 - Axios for network requests.
