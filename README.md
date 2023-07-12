@@ -55,6 +55,7 @@ https://github.com/benikalonga/ZuseTracker/assets/29547138/e77c7418-731e-460d-97
 - "axios": "^1.4.0",
 - "haversine": "^1.1.1",
 - "react": "18.2.0",
+- "react-redux": "^8.1.1",
 - "react-native": "0.72.1",
 - "react-native-animatable": "^1.3.3",
 - "react-native-blurhash": "^1.1.10",
@@ -67,9 +68,8 @@ https://github.com/benikalonga/ZuseTracker/assets/29547138/e77c7418-731e-460d-97
 - "react-native-screens": "^3.22.0",
 - "react-native-share": "^9.1.0",
 - "react-native-shared-element": "^0.8.8",
-  "react-native-vector-icons": "^9.2.0",
-  "react-navigation-shared-element": "^3.1.3",
-  "react-redux": "^8.1.1",
+- "react-native-vector-icons": "^9.2.0",
+- "react-navigation-shared-element": "^3.1.3"
 
 # API (Free)
 
