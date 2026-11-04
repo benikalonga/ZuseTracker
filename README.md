@@ -1,6 +1,6 @@
 # ZuseTracker
 
-## by Beni Kalonga - Second Technical Assignment
+## by Beni Kalonga
 
 #Get started with this
 
